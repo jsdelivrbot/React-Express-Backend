@@ -6,7 +6,7 @@
 //req of course is request object ie headers, body etc. res resopnse of course, and 
 //next which will handle errors
 module.exports = function(app){
-	app.get('/',function(){;
+	app.get('/',function(req,res,next){;
     res.send(['einy','meany','miney','mo'])
 	});
 
