@@ -1,5 +1,15 @@
 //my database
 const User = require('../models/user');
+const config = require('../config');
+const jwt = require('jwt-simple');
+
+function tokenForUser(user){
+	//sub = subject , iat = issued at time jwt = json web token
+	const timeStamp = new Date().getTime();
+  return jwt.encode({sub:user.id, iat:timeStamp},config.secret);
+}
+
+
 
 //User being the total class of all users not just one
 exports.signup = function(req,res,next){
@@ -37,7 +47,7 @@ const user = new User({
 //with a json success confirmation
 user.save(function(err){
  if(err){return next(err)}
- 	res.json({success:true})
+ 	res.json({token:tokenForUser(user)})
  });
 });
 
