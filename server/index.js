@@ -6,19 +6,17 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const app = express();
 const router = require('./router');
-
-
-
-
-
-//APP set up 
 const mongoose = require('mongoose');
-router(app);
 
 
+//DB set up
+
+mongoose.connect('mongodb://localhost:auth/auth');
 
 
+//asdf
 
+//APP SET UP 
 
 
 //middlewares are 
@@ -32,9 +30,12 @@ app.use(morgan('combined'));
 
 //body-parser is a middleware that parses any incoming request,I mean any, and parses for json
 //'*/*' means any!!!
+
+// app.use(bodyParser.urlencoded({ extended: false }))
+
 app.use(bodyParser.json({type:'*/*'}));
 
-
+router(app);
 
 //SERVER Setup(connect with the world! 'web' )
 
@@ -47,3 +48,6 @@ const port = process.env.PORT || 3090;
 const server = http.createServer(app);
 server.listen(port);
 console.log('Server listening on port: ', port);
+
+
+

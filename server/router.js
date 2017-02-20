@@ -1,3 +1,5 @@
+const Authentication = require('./controllers/authentication');
+                      
 //exported module will be imported into index.js of server
 // will add functionality to router ie const router = require(./require) in index.js
 
@@ -6,8 +8,10 @@
 //req of course is request object ie headers, body etc. res resopnse of course, and 
 //next which will handle errors
 module.exports = function(app){
-	app.get('/',function(req,res,next){;
-    res.send(['einy','meany','miney','mo'])
-	});
+ app.post('/signup',Authentication.signup);
+ app.get('/signup',function(req,res,next){
+   res.send({popping:"now"})
+ });
+ 
 
 }
