@@ -1,6 +1,6 @@
 const Authentication = require('./controllers/authentication');
 const passportService = require('./services/passport');
-const passport = require('passport')
+const passport = require('passport');
 
 
 
@@ -10,8 +10,8 @@ const passport = require('passport')
 //passport makes a cookie based session
 //we make it false because we are using TOKENS!!!! instead of sessions
 //require auth is an interceptor a middleware!!!
-const requireAuth = passport.authenticate('jwt',{session:false});
 
+const requireAuth = passport.authenticate('jwt',{session:false});
 
 const requireSignin = passport.authenticate('local',{session:false});
                       
@@ -23,14 +23,16 @@ const requireSignin = passport.authenticate('local',{session:false});
 //req of course is request object ie headers, body etc. res resopnse of course, and 
 //next which will handle errors
 module.exports = function(app){
- app.post('/signup',Authentication.signup);
-
- app.post('/signin',requireSignin,Authentication.signup)
- 
 //first go to root '/', then redirect to require auth, then go to route
  app.get('/',requireAuth,function(req,res){
    res.send({hi:'there'});
  });
+
+ app.post('/signup',Authentication.signup);
+ app.post('/signin',requireSignin,Authentication.signin);
+
+ 
+
 
 
  

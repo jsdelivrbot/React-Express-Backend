@@ -6,16 +6,17 @@ const jwt = require('jwt-simple');
 
 function tokenForUser(user){
 	//sub = subject , iat = issued at time jwt = json web token
-	const timeStamp = new Date().getTime();
-  return jwt.encode({sub:user.id, iat:timeStamp},config.secret);
+	const timestamp = new Date().getTime();
+  return jwt.encode({sub:user.id, iat:timestamp}, config.secret);
 }
 
 
 
 //User email and password is already authed
 //All that is needed it to give a token!!
-exports.signin = function(req,res,next){
+exports.signin = function(req, res, next){
 
+  res.send({ token: tokenForUser(req.user) });
 }
 
 //User being the total class of all users not just one
@@ -33,7 +34,8 @@ if(!email || !password){
 User.findOne({email:email},function(err,existingUser){
 	
 //handle if database connection throws error
-  if(err){return next(err); } 
+  if(err){return next(err); 
+  } 
   
 //if user does exist, return an error 422 status. '422' sets http code on response
 // to unprocessable entity basically data supplied was bad and not

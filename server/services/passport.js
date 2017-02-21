@@ -28,8 +28,8 @@ const localLogin = new LocalStrategy({localOptions},function(email,password,done
 	//user name and pass are correct
 	//if not just call done if false
   User.findOne({email:email},function(err,user){
-   if(err){return done(err)};
-   if(!user){return done(null,false)}
+   if(err){return done(err);}
+   if(!user){return done(null,false);}
   //compare password is == to user.password 	
 
    user.comparePassword(password,function(err,isMatch){
@@ -78,7 +78,7 @@ const jwtOptions = {
   //return jwt.encode({sub:user.id, iat:timeStamp},config.secret);
 //}
 
-//jwtLogin is a tokened login. localLogin is juse email and password.(The initial test)
+//jwtLogin is a tokened login. localLogin is just email and password.(The initial test)
 const jwtLogin = new JwtStrategy(jwtOptions,function(payload,done){
 	//we want to see if user id exist in our database
 	//if it does call done with that user,
@@ -105,6 +105,7 @@ const jwtLogin = new JwtStrategy(jwtOptions,function(payload,done){
 //tell passport to use strategy
 passport.use(jwtLogin);
 passport.use(localLogin);
+
 
 
 
