@@ -36,6 +36,18 @@ userSchema.pre('save',function(next){
 	});
 
 });
+
+//this is for comparing a submitted password against saved saved hashed database
+//password by adding a new method to User.Schema.method object like Prototype
+//all this is just the definition that will be piped into passport.js to use
+userSchema.method.comparePassword = function(canidatePassword,callback){
+   bcrypt.compare(canidatePassword,this.password,function(err,isMatch){
+    if(err){return callback(err)};
+    return callback(null, isMatch)
+
+   });
+};
+
  
 //create model class'
 //load schema(adding userScema model) into mongoose under the collection 'user'

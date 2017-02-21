@@ -1,5 +1,6 @@
 //my database
 const User = require('../models/user');
+//config is just the seceret being imported!!
 const config = require('../config');
 const jwt = require('jwt-simple');
 
@@ -10,6 +11,12 @@ function tokenForUser(user){
 }
 
 
+
+//User email and password is already authed
+//All that is needed it to give a token!!
+exports.signin = function(req,res,next){
+
+}
 
 //User being the total class of all users not just one
 exports.signup = function(req,res,next){

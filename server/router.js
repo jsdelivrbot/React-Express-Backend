@@ -1,4 +1,19 @@
 const Authentication = require('./controllers/authentication');
+const passportService = require('./services/passport');
+const passport = require('passport')
+
+
+
+
+//creating middleware that authenticates before hitting the route
+//it is told to use 'jwt' strategy and not to make a cookie based session!! By default
+//passport makes a cookie based session
+//we make it false because we are using TOKENS!!!! instead of sessions
+//require auth is an interceptor a middleware!!!
+const requireAuth = passport.authenticate('jwt',{session:false});
+
+
+const requireSignin = passport.authenticate('local',{session:false});
                       
 //exported module will be imported into index.js of server
 // will add functionality to router ie const router = require(./require) in index.js
@@ -9,9 +24,15 @@ const Authentication = require('./controllers/authentication');
 //next which will handle errors
 module.exports = function(app){
  app.post('/signup',Authentication.signup);
- app.get('/signup',function(req,res,next){
-   res.send({popping:"now"})
+
+ app.post('/signin',requireSignin,Authentication.signup)
+ 
+//first go to root '/', then redirect to require auth, then go to route
+ app.get('/',requireAuth,function(req,res){
+   res.send({hi:'there'});
  });
+
+
  
 
 }
